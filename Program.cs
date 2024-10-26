@@ -30,13 +30,13 @@ builder.Services.AddCors(options =>
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-  options.ListenAnyIP(8080); // HTTP port
-  options.ListenAnyIP(8081, listenOptions =>
-  {
-    // Läs lösenord från docker-compose.yml
-    var certPassword = Environment.GetEnvironmentVariable("CERT_PASSWORD");
-    listenOptions.UseHttps("/root/certs/localhostcert.pfx", certPassword); // HTTPS port med certfikatet
-  });
+  options.ListenAnyIP(8080); // HTTP port (kommer endast använda mig av denna i utvecklingsläge)
+  //options.ListenAnyIP(8081, listenOptions =>
+  //{
+  //  // Läs lösenord från docker-compose.yml
+  //  var certPassword = Environment.GetEnvironmentVariable("CERT_PASSWORD");
+  //  listenOptions.UseHttps("/root/certs/localhostcert.pfx", certPassword); // HTTPS port med certfikatet
+  //});
 });
 
 //builder.WebHost.ConfigureKestrel(options =>
@@ -53,7 +53,11 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+  app.UseHttpsRedirection();
+}
+
 app.UseAuthorization();
 app.UseCors("AllowFrontend");
 app.MapControllers();

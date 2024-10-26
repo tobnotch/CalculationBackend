@@ -10,18 +10,20 @@ services:
     networks:
       - calcnetwork
 
+  # konfigurerad för att endast använda HTTP pga utvecklingsläge
   backend:
     build:
-      context: ./MiscBackend
+      context: ../../CalculationBackend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"  # HTTP-port
-      - "8081:8081"  # HTTPS-port
-    volumes:
-      - C:/Users/tobia/Desktop:/root/certs
+      # - "8081:8081"  # HTTPS-port
+    # volumes:
+    #   - C:/Users/tobia/Desktop:/root/certs
     environment:
-      ASPNETCORE_URLS: "http://+:8080;https://+:8081"
-      CERT_PASSWORD: "Bytmig123!"
+      # ASPNETCORE_URLS: "http://+:8080;https://+:8081"
+      # CERT_PASSWORD: "Bytmig123!"
+      ASPNETCORE_URLS: "http://+:8080"
       MONGODB_CONNECTION_STRING: "mongodb://mongo:27017/calcdb"  # Anslutningssträng
     networks:
       - calcnetwork
@@ -30,7 +32,7 @@ services:
 
   frontend:
     build:
-      context: ./Calculations
+      context: ../../CalculationFrontend
       dockerfile: Dockerfile
     ports:
       - "5173:5173"  # Vite-dev server för React
