@@ -1,7 +1,7 @@
-﻿using MiscBackend.Data.Entities;
-using MiscBackend.Data.Repositories;
+﻿using CalculationBackend.Data.Entities;
+using CalculationBackend.Data.Repositories;
 
-namespace MiscBackend.Services.Calculation
+namespace CalculationBackend.Services.Calculation
 {
   public class CalculationService : ICalculationService
   {

@@ -26,17 +26,17 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Kopiera csproj och återställ beroenden
-COPY ["MiscBackend.csproj", "."]
-RUN dotnet restore "./MiscBackend.csproj"
+COPY ["CalculationBackend.csproj", "."]
+RUN dotnet restore "./CalculationBackend.csproj"
 
 # Kopiera all kod och bygg applikationen
 COPY . .
-RUN dotnet build "./MiscBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./CalculationBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Stage 2: Publicerings-steg
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./MiscBackend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./CalculationBackend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Stage 3: Runtime-steg (detta är den slutliga containern som körs i produktion)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
@@ -50,7 +50,7 @@ EXPOSE 8080
 EXPOSE 8081
 
 # Kör applikationen
-ENTRYPOINT ["dotnet", "MiscBackend.dll"]
+ENTRYPOINT ["dotnet", "CalculationBackend.dll"]
 
 
 
@@ -61,17 +61,17 @@ ENTRYPOINT ["dotnet", "MiscBackend.dll"]
 #WORKDIR /src
 #
 ## Kopiera csproj och återställ beroenden
-#COPY ["MiscBackend.csproj", "."]
-#RUN dotnet restore "./MiscBackend.csproj"
+#COPY ["CalculationBackend.csproj", "."]
+#RUN dotnet restore "./CalculationBackend.csproj"
 #
 ## Kopiera all kod och bygg applikationen
 #COPY . .
-#RUN dotnet build "./MiscBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
+#RUN dotnet build "./CalculationBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 #
 ## Stage 2: Publicerings-steg
 #FROM build AS publish
 #ARG BUILD_CONFIGURATION=Release
-#RUN dotnet publish "./MiscBackend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+#RUN dotnet publish "./CalculationBackend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 #
 ## Stage 3: Runtime-steg (detta är den slutliga containern som körs i produktion)
 #FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
@@ -89,4 +89,4 @@ ENTRYPOINT ["dotnet", "MiscBackend.dll"]
 #EXPOSE 8081
 #
 ## Kör applikationen men vänta först på att MongoDB ska vara redo
-#ENTRYPOINT ["/wait-for-it.sh", "mongo:27017", "--", "dotnet", "MiscBackend.dll"]
+#ENTRYPOINT ["/wait-for-it.sh", "mongo:27017", "--", "dotnet", "CalculationBackend.dll"]

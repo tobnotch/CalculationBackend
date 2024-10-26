@@ -1,6 +1,6 @@
-﻿using MiscBackend.Data.Entities;
+﻿using CalculationBackend.Data.Entities;
 
-namespace MiscBackend.Services.Calculation
+namespace CalculationBackend.Services.Calculation
 {
   public interface ICalculationService
   {

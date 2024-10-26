@@ -1,4 +1,4 @@
-﻿namespace MiscBackend.DTOs
+﻿namespace CalculationBackend.DTOs
 {
   public class CalculationRequest
   {

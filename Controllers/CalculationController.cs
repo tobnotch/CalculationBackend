@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MiscBackend.Data.Entities;
-using MiscBackend.DTOs;
-using MiscBackend.Services.Calculation;
+using CalculationBackend.Data.Entities;
+using CalculationBackend.DTOs;
+using CalculationBackend.Services.Calculation;
 
-namespace MiscBackend.Controllers
+namespace CalculationBackend.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]

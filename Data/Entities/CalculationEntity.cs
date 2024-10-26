@@ -1,4 +1,4 @@
-﻿namespace MiscBackend.Data.Entities
+﻿namespace CalculationBackend.Data.Entities
 {
   public class CalculationEntity
   {

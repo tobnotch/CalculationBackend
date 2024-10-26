@@ -1,7 +1,7 @@
-﻿using MiscBackend.Data.Entities;
+﻿using CalculationBackend.Data.Entities;
 using MongoDB.Driver;
 
-namespace MiscBackend.Data.Repositories
+namespace CalculationBackend.Data.Repositories
 {
   public class CalculationRepository
   {

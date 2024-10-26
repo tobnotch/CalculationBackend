@@ -1,5 +1,5 @@
-using MiscBackend.Data.Repositories;
-using MiscBackend.Services.Calculation;
+using CalculationBackend.Data.Repositories;
+using CalculationBackend.Services.Calculation;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
