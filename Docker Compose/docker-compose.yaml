@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest  # Använd den senaste MongoDB-imagen
+    ports:
+      - "27017:27017"  # Mappa MongoDB-port
+    volumes:
+      - mongo_data:/data/db  # Persistenta data
+    networks:
+      - calcnetwork
+
+  backend:
+    build:
+      context: ./MiscBackend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # HTTP-port
+      - "8081:8081"  # HTTPS-port
+    volumes:
+      - C:/Users/tobia/Desktop:/root/certs
+    environment:
+      ASPNETCORE_URLS: "http://+:8080;https://+:8081"
+      CERT_PASSWORD: "Bytmig123!"
+      MONGODB_CONNECTION_STRING: "mongodb://mongo:27017/calcdb"  # Anslutningssträng
+    networks:
+      - calcnetwork
+    depends_on:
+      - mongo  # Se till att backend startar efter mongo
+
+  frontend:
+    build:
+      context: ./Calculations
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"  # Vite-dev server för React
+    networks:
+      - calcnetwork
+    depends_on:
+      - backend
+
+networks:
+  calcnetwork:
+    driver: bridge
+
+volumes:
+  mongo_data:  # Definiera en volym för MongoDB-data

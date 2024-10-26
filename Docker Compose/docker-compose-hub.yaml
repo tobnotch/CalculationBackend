@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongo-hub:
+    image: tobnotch/mongo:1.0  # Hämta från DockerHub
+    ports:
+      - "27018:27017"  # Mappa MongoDB-port
+    volumes:
+      - mongo_hub_data:/data/db  # Persistenta data
+    networks:
+      - hubnetwork
+
+  backend-hub:
+    image: tobnotch/misc-backend:2.0  # Hämta från DockerHub
+    ports:
+      - "8082:8080"  # HTTP-port
+      - "8083:8081"  # HTTPS-port
+    volumes:
+      - C:/Users/tobia/Desktop:/root/certs  # Montera certifikat från host till rätt sökväg i containern
+    environment:
+      ASPNETCORE_URLS: "http://+:8080;https://+:8081"
+      CERT_PASSWORD: "Bytmig123!"  # Certifikatets lösenord för HTTPS
+      MONGODB_CONNECTION_STRING: "mongodb://mongo-hub:27017/calcdb"  # Anslutningssträng till MongoDB
+    networks:
+      - hubnetwork
+    depends_on:
+      - mongo-hub  # Backend startar efter mongo
+
+  frontend-hub:
+    image: tobnotch/misc-frontend:1.0  # Hämta från DockerHub
+    ports:
+      - "5174:5173"  # React-frontend
+    networks:
+      - hubnetwork
+    depends_on:
+      - backend-hub
+
+networks:
+  hubnetwork:
+    driver: bridge
+
+volumes:
+  mongo_hub_data:  # Definiera en volym för MongoDB-data

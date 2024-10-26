@@ -1,0 +1,25 @@
+﻿Förklaring av mappstruktur
+
+***
+
+Controllers: Hanterar inkommande HTTP-förfrågningar och returnerar svar.
+
+Models: Innehåller datamodeller och entiteter, ofta representerade som databastabeller.
+
+Data: Här ligger datakontexten och eventuella repository-mönster för databasinteraktioner.
+
+Services: Implementerar affärslogik och ansvarar för specifika funktioner som kan återanvändas.
+
+Interfaces: Gränssnitt för services, repositories och andra beroenden som kan injiceras via DI.
+
+DTOs: Här placeras Data Transfer Objects för att överföra data mellan klient och server eller mellan olika lager.
+
+Helpers: Hjälpklasser för t.ex. JWT-hantering, filhantering, validering, etc.
+
+Migrations: Entity Framework Core migrations, om du använder en relationell databas.
+
+Middlewares: Custom middlewares som manipulerar HTTP-förfrågningar i pipeline.
+
+Configurations: Konfigurationsinställningar som t.ex. autentisering, externa tjänster, API-konfigurationer.
+
+***

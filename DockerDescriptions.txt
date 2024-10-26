@@ -1,0 +1,13 @@
+﻿Förklaring av Docker-begrepp
+
+***
+
+Image (bild): En bild är en statisk kopia av en applikation och dess beroenden. Den är skapad från en Dockerfile och kan distribueras och köras på vilken maskin som helst som har Docker installerat.
+
+Container: En container är en körbar instans av en bild. Det är där din applikation körs isolerat från andra processer på systemet.
+
+Dockerfile: En textfil som innehåller instruktioner för hur man bygger en Docker-bild. Det inkluderar information om vilket basimage som ska användas, hur applikationen ska byggas, och vilka portar eller beroenden som behövs.
+
+Docker Hub: Ett molnbaserat register där du kan dela och distribuera Docker-bilder.
+
+***
