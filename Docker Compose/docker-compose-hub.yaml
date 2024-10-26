@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  mongo-hub:
+  mongo:
     image: tobnotch/mongo:1.0  # Hämta från DockerHub
     ports:
       - "27017:27017"  # Mappa MongoDB-port
     volumes:
-      - mongo_hub_data:/data/db  # Persistenta data
+      - mongo_data:/data/db  # Persistenta data
     networks:
-      - hubnetwork
+      - calcnetwork
 
-  backend-hub:
-    image: tobnotch/calculationbackend:2.0  # Hämta från DockerHub
+  backend:
+    image: tobnotch/calculationbackend:1.0  # Hämta från DockerHub
     ports:
       - "8080:8080"  # HTTP-port
       # - "8083:8081"  # HTTPS-port
@@ -21,24 +21,24 @@ services:
       # ASPNETCORE_URLS: "http://+:8080;https://+:8081"
       # CERT_PASSWORD: "Bytmig123!"  # Certifikatets lösenord för HTTPS
       ASPNETCORE_URLS: "http://+:8080"
-      MONGODB_CONNECTION_STRING: "mongodb://mongo-hub:27017/calcdb"  # Anslutningssträng till MongoDB
+      MONGODB_CONNECTION_STRING: "mongodb://mongo:27017/calcdb"  # Anslutningssträng till MongoDB
     networks:
-      - hubnetwork
+      - calcnetwork
     depends_on:
-      - mongo-hub  # Backend startar efter mongo
+      - mongo  # Backend startar efter mongo
 
-  frontend-hub:
+  frontend:
     image: tobnotch/calculationfrontend:1.0  # Hämta från DockerHub
     ports:
       - "5173:5173"  # React-frontend
     networks:
-      - hubnetwork
+      - calcnetwork
     depends_on:
-      - backend-hub
+      - backend
 
 networks:
-  hubnetwork:
+  calcnetwork:
     driver: bridge
 
 volumes:
-  mongo_hub_data:  # Definiera en volym för MongoDB-data
+  mongo_data:  # Definiera en volym för MongoDB-data
