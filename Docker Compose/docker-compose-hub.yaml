@@ -4,16 +4,16 @@ services:
   mongo-hub:
     image: tobnotch/mongo:1.0  # Hämta från DockerHub
     ports:
-      - "27018:27017"  # Mappa MongoDB-port
+      - "27017:27017"  # Mappa MongoDB-port
     volumes:
       - mongo_hub_data:/data/db  # Persistenta data
     networks:
       - hubnetwork
 
   backend-hub:
-    image: tobnotch/calculationbackend:1.0  # Hämta från DockerHub
+    image: tobnotch/calculationbackend:2.0  # Hämta från DockerHub
     ports:
-      - "8082:8080"  # HTTP-port
+      - "8080:8080"  # HTTP-port
       # - "8083:8081"  # HTTPS-port
     # volumes:
     #   - C:/Users/tobia/Desktop:/root/certs  # Montera certifikat från host till rätt sökväg i containern
@@ -30,7 +30,7 @@ services:
   frontend-hub:
     image: tobnotch/calculationfrontend:1.0  # Hämta från DockerHub
     ports:
-      - "5174:5173"  # React-frontend
+      - "5173:5173"  # React-frontend
     networks:
       - hubnetwork
     depends_on:
