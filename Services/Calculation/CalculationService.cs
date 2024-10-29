@@ -1,5 +1,6 @@
 ﻿using CalculationBackend.Data.Entities;
 using CalculationBackend.Data.Repositories;
+using CalculationBackend.DTOs;
 
 namespace CalculationBackend.Services.Calculation
 {
@@ -12,24 +13,24 @@ namespace CalculationBackend.Services.Calculation
       _repository = repository;
     }
 
-    public async Task<CalculationEntity> CalculateAsync(double numberOne, double numberTwo, string operation)
+    public async Task<CalculationResultDTO> CalculateAsync(CalculationRequestDTO request)
     {
       double result;
 
-      switch (operation)
+      switch (request.Operation)
       {
         case "+":
-          result = numberOne + numberTwo;
+          result = request.NumberOne + request.NumberTwo;
           break;
         case "-":
-          result = numberOne - numberTwo;
+          result = request.NumberOne - request.NumberTwo;
           break;
         case "×":
-          result = numberOne * numberTwo;
+          result = request.NumberOne * request.NumberTwo;
           break;
         case "/":
-          if (numberTwo != 0)
-            result = numberOne / numberTwo;
+          if (request.NumberTwo != 0)
+            result = request.NumberOne / request.NumberTwo;
           else
             throw new InvalidOperationException("Division by zero is not allowed");
           break;
@@ -37,24 +38,19 @@ namespace CalculationBackend.Services.Calculation
           throw new InvalidOperationException("Invalid operation");
       }
 
-      // Skapa en ny Calculation-objekt för att spara i databasen
-      var calculation = new CalculationEntity
-      {
-        NumberOne = numberOne,
-        NumberTwo = numberTwo,
-        Operation = operation,
-        Result = result
-      };
+      var entity = CalculationMapper.ToEntity(request);
+      entity.Result = result;
+      await _repository.CreateAsync(entity);
 
-      // Använd _repository för att spara beräkningen i databasen
-      await _repository.CreateAsync(calculation);
-
-      return calculation; // Returnera den beräknade Calculation
+      var DTO = CalculationMapper.ToDTO(entity);
+      return DTO; // Returnera den beräknade Calculation
     }
 
-    public async Task<List<CalculationEntity>> GetAllCalculationsAsync()
+    public async Task<List<CalculationResultDTO>> GetAllCalculationsAsync()
     {
-      return await _repository.GetAllAsync();
+      var entities = await _repository.GetAllAsync();
+      var DTOs = entities.Select(CalculationMapper.ToDTO).ToList();
+      return DTOs;
     }
   }
 }

@@ -17,11 +17,11 @@ namespace CalculationBackend.Controllers
     }
 
     [HttpPost("calculate")]
-    public async Task<ActionResult<CalculationEntity>> Calculate([FromBody] CalculationRequest request)
+    public async Task<ActionResult<CalculationResultDTO>> Calculate([FromBody] CalculationRequestDTO request)
     {
       try
       {
-        var result = await _service.CalculateAsync(request.NumberOne, request.NumberTwo, request.Operation);
+        var result = await _service.CalculateAsync(request);
         return CreatedAtAction(nameof(Calculate), new { id = result.Id }, result);
       }
       catch (Exception ex)
@@ -31,7 +31,7 @@ namespace CalculationBackend.Controllers
     }
 
     [HttpGet("history")]
-    public async Task<ActionResult<List<CalculationEntity>>> GetCalculations()
+    public async Task<ActionResult<List<CalculationResultDTO>>> GetCalculations()
     {
       var calculations = await _service.GetAllCalculationsAsync();
       return Ok(calculations);
