@@ -16,11 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Helpers\" />
     <Folder Include="Middlewares\" />
+    <Folder Include="Models\" />
     <Folder Include="Configurations\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Docker Compose\" />
   </ItemGroup>
 

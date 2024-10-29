@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CalculationBackend.Data.Entities;
 using CalculationBackend.DTOs;
-using CalculationBackend.Services.Calculation;
+using CalculationBackend.Interfaces;
 
 namespace CalculationBackend.Controllers
 {
-  [ApiController]
+    [ApiController]
   [Route("api/[controller]")]
   public class CalculationController : ControllerBase
   {

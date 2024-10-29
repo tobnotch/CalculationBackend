@@ -1,8 +1,10 @@
 ﻿using CalculationBackend.Data.Entities;
 using CalculationBackend.Data.Repositories;
 using CalculationBackend.DTOs;
+using CalculationBackend.Factories;
+using CalculationBackend.Interfaces;
 
-namespace CalculationBackend.Services.Calculation
+namespace CalculationBackend.Services
 {
   public class CalculationService : ICalculationService
   {
@@ -15,35 +17,16 @@ namespace CalculationBackend.Services.Calculation
 
     public async Task<CalculationResultDTO> CalculateAsync(CalculationRequestDTO request)
     {
-      double result;
+      var operation = OperationFactory.CreateOperation(request.Operation);
 
-      switch (request.Operation)
-      {
-        case "+":
-          result = request.NumberOne + request.NumberTwo;
-          break;
-        case "-":
-          result = request.NumberOne - request.NumberTwo;
-          break;
-        case "×":
-          result = request.NumberOne * request.NumberTwo;
-          break;
-        case "/":
-          if (request.NumberTwo != 0)
-            result = request.NumberOne / request.NumberTwo;
-          else
-            throw new InvalidOperationException("Division by zero is not allowed");
-          break;
-        default:
-          throw new InvalidOperationException("Invalid operation");
-      }
+      double result = operation.Calculate(request.NumberOne, request.NumberTwo);
 
       var entity = CalculationMapper.ToEntity(request);
       entity.Result = result;
       await _repository.CreateAsync(entity);
 
       var DTO = CalculationMapper.ToDTO(entity);
-      return DTO; // Returnera den beräknade Calculation
+      return DTO;
     }
 
     public async Task<List<CalculationResultDTO>> GetAllCalculationsAsync()

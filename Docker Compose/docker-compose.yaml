@@ -23,8 +23,9 @@ services:
     environment:
       # ASPNETCORE_URLS: "http://+:8080;https://+:8081"
       # CERT_PASSWORD: "Bytmig123!"
+      ASPNETCORE_ENVIRONMENT: "Production"
       ASPNETCORE_URLS: "http://+:8080"
-      MONGODB_CONNECTION_STRING: "mongodb://mongo:27017/calcdb"  # Anslutningssträng
+      # MONGODB_CONNECTION_STRING: "mongodb://mongo:27017/calcdb"  # Anslutningssträng
     networks:
       - calcnetwork
     depends_on:

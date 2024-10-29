@@ -1,14 +1,12 @@
 using CalculationBackend.Data.Repositories;
-using CalculationBackend.Services.Calculation;
+using CalculationBackend.Interfaces;
+using CalculationBackend.Services;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IMongoClient>(s =>
-{
-  var settings = builder.Configuration.GetConnectionString("MongoDb");
-  return new MongoClient(settings);
-});
+var connectionString = builder.Configuration.GetConnectionString("MongoDb");
+builder.Services.AddSingleton<IMongoClient>(s => new MongoClient(connectionString));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -49,11 +47,13 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
-  app.UseSwaggerUI();
+  
 }
 
- //app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseCors("AllowFrontend");

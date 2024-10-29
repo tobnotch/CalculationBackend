@@ -20,6 +20,8 @@ namespace CalculationBackend.Services
       return new CalculationResultDTO
       {
         Id = entity.Id,
+        NumberOne = entity.NumberOne,
+        NumberTwo = entity.NumberTwo,
         Operation = entity.Operation,
         Result = entity.Result,
       };
