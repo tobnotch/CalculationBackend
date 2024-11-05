@@ -1,9 +1,10 @@
 ﻿using CalculationBackend.Data.Entities;
+using CalculationBackend.Interfaces;
 using MongoDB.Driver;
 
 namespace CalculationBackend.Data.Repositories
 {
-  public class CalculationRepository
+  public class CalculationRepository : ICalculationRepository
   {
     private readonly IMongoCollection<CalculationEntity> _calculations;
 

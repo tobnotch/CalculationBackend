@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<CalculationRepository>();
+builder.Services.AddSingleton<ICalculationRepository, CalculationRepository>();
 builder.Services.AddTransient<ICalculationService, CalculationService>();
 
 builder.Services.AddCors(options =>
@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
   options.AddPolicy("AllowFrontend",
       policy =>
       {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:5174") // Lokal frontend och Hub frontend
+        policy.WithOrigins("http://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
       });
@@ -37,18 +37,7 @@ builder.WebHost.ConfigureKestrel(options =>
   //});
 });
 
-//builder.WebHost.ConfigureKestrel(options =>
-//{
-//  options.ListenAnyIP(8080); // HTTP port
-//  //options.ListenAnyIP(8081); // HTTPS port
-//});
-
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-  
-}
 
 app.UseSwagger();
 app.UseSwaggerUI();

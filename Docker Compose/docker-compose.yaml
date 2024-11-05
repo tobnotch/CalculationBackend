@@ -17,15 +17,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"  # HTTP-port
-      # - "8081:8081"  # HTTPS-port
-    # volumes:
-    #   - C:/Users/tobia/Desktop:/root/certs
     environment:
-      # ASPNETCORE_URLS: "http://+:8080;https://+:8081"
-      # CERT_PASSWORD: "Bytmig123!"
       ASPNETCORE_ENVIRONMENT: "Production"
       ASPNETCORE_URLS: "http://+:8080"
-      # MONGODB_CONNECTION_STRING: "mongodb://mongo:27017/calcdb"  # Anslutningssträng
     networks:
       - calcnetwork
     depends_on:

@@ -8,9 +8,9 @@ namespace CalculationBackend.Services
 {
   public class CalculationService : ICalculationService
   {
-    private readonly CalculationRepository _repository;
+    private readonly ICalculationRepository _repository;
 
-    public CalculationService(CalculationRepository repository)
+    public CalculationService(ICalculationRepository repository)
     {
       _repository = repository;
     }
